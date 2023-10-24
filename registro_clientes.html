@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <title>Document</title>
+</head>
+<body>
+    <div>
+        <form>
+            <p class="title">REGISTRO DE CLIENTES</p>
+            <div class="entradas">
+            <input type="text" id="Nombre" class="name" placeholder="NOMBRE"><br>
+            <input type="text" id="rif" class="rif" placeholder="RIF"><br>
+            <select name="genero" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" id="zona" required>
+                <option value="San Francisco">San Francisco</option>
+                <option value="Maracaibo">Maracaibo</option>
+                <option value="Cabimas">Cabimas</option>
+                <option value="Machiques">Machiques</option>
+                <option value="Ciudad Ojeda">Ciudad Ojeda</option>
+                <option value="El Mojan">El Mojan</option>
+                <option value="La Rita">La Rita</option>
+                <option value="Los Puertos">Los Puertos</option>
+              </select>
+            </div>
+            <input type="button" class="btn2" id="btn-clientes" onclick="RegistroC_th()" value="Registro"><br>
+            <a href="panel.html" class="btn btn-danger">Volver</a>
+            <a href="tabla_Clientes.html" class="btn btn-success">VER CLIENTES REGISTRADOS</a>
+
+        </form>
+
+        <div id="resultado" class="resultado"></div>
+    </div>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+        body{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            font-family: Arial, Helvetica, sans-serif;
+            background: linear-gradient(27deg,#000c49 50%, #000c95 50%); 
+        }
+        .entradas input{
+            display: block;
+            margin: auto;
+            height: 40px;
+            width: 75%;
+            padding-left: 10px;
+            color: white;
+            border: 1px solid #fff;
+            border-radius: 2px;
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+            background-color: transparent;
+            border-top-left-radius: 10px;
+            border-bottom-right-radius: 10px;
+            font-size: 1rem;
+            outline: none;
+            left:20px ;
+        }
+        .title{
+            text-align: justify;
+            font-size: 2rem;
+            font-weight: 600;
+            color: aliceblue;
+            margin-bottom: 25px;
+        }
+        .btn2{
+            display: block;
+            margin: auto;
+            margin-top: 25px;
+            margin-bottom: 30px;
+            height: 40px;
+            width: 70%;
+            background: transparent;
+            color: beige;
+            border-radius: 2px;
+            cursor: pointer;
+            outline: none;
+            transition: all .5s ease;
+        }
+        .btn2:hover{
+            color: black;
+            border: 2px solid #fff;
+            background:linear-gradient(#B0E0E6,#00FFFF) ;
+        }
+        .resultado{
+            display: block;
+            position: absolute;
+            color: red;
+            top: 160px;
+        }
+
+
+    </style>
+</body>
+<script>
+    function RegistroC_th(){
+        var name =document.getElementById("Nombre").value;
+        var rif =document.getElementById("rif").value;
+        var zona =document.getElementById("zona").value;
+
+        if (!name==" " && !rif==" " && !zona ==" "){
+            var parametros = {
+                "name": name,
+                "rif": rif,
+                "zona": zona,
+            };
+            $.ajax({
+                url: "registro_clientes.php",
+                type: "POST",
+                data: parametros,
+                beforeSend: function(){$("#resultado").html("Procesando, espere por favor...");},
+                success: function(response) {
+                    if (response){$("#resultado").html(response);}
+                    else{$("#resultado").html(response);}
+                }
+                })
+        }else{alert("Debe rellenar todos los campos")}
+    }
+</script>
+</html>
